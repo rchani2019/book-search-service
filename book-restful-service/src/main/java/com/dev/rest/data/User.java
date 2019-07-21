@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +39,7 @@ public class User extends BaseSerializable {
     /*
      * 사용자 아이디 
      */
-    @Column(length = 20, nullable = false)
+    @Column(length = 30, nullable = false)
 	private String userId;
 	
     /*
@@ -49,10 +51,11 @@ public class User extends BaseSerializable {
     /*
      * 이름 
      */
-    @Column(length = 10, nullable = false)
+    @Column(length = 20, nullable = false)
 	private String name;
     
     @OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+    @JsonIgnore
     private List<SearchHistory> searchHistorys = new ArrayList<>();
 
 	public User(String userId, String password, String name) {
