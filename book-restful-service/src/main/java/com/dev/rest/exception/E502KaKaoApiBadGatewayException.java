@@ -1,15 +1,11 @@
 package com.dev.rest.exception;
 
 import org.springframework.http.HttpStatus;
-/**
- * 외부 연동 에러 
- * @author gomunjeong
- *
- */
-@SuppressWarnings("serial")
-public class E502BadGatewayException extends EcodeException implements RestAPIException {
 
-    public E502BadGatewayException() {
+@SuppressWarnings("serial")
+public class E502KaKaoApiBadGatewayException extends EcodeException implements RestAPIException {
+
+    public E502KaKaoApiBadGatewayException() {
         super();
     }
 

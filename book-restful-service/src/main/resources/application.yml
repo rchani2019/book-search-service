@@ -2,8 +2,9 @@ spring:
   profiles:
     active: local
   datasource:
+    name: testdb
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/test;AUTO_SERVER=TRUE
+    url: jdbc:h2:~/test;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password: 
   jpa:
@@ -28,12 +29,18 @@ spring:
     console:
       enabled: true
       path: /db-console
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 server:
   servlet-path: /api
   tomcat:
 #    basedir: target/.tomcat
     accesslog:
       enabled: true
+    uri-encoding: UTF-8
   error:
     whitelabel:
       enabled: false
@@ -47,3 +54,14 @@ logging:
   level:
     com.uangel.comma: DEBUG 
     org.hibernate.SQL: INFO
+
+api:
+  search:
+    kakao:
+      url: https://dapi.kakao.com/v3/search/book
+      apiKey: KakaoAK d0272cc6c5fc53cf6ebce64c6e8a0d33
+    naver:
+      url: https://openapi.naver.com/v1/search/book.json
+      clientId: wKkHs1GGw0VvCx3VhDsU
+      clientSecret: x2ue8waTJk
+      

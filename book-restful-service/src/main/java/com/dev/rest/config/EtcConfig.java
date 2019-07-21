@@ -5,19 +5,23 @@ import java.util.TimeZone;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Configuration
 public class EtcConfig {
 	@Bean
 	public ObjectMapper mapper() {
 		ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().build();
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
+		objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 		objectMapper.setTimeZone(TimeZone.getDefault());
 		return objectMapper;
 	}
