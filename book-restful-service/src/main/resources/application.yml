@@ -1,0 +1,49 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/test;AUTO_SERVER=TRUE
+    username: sa
+    password: 
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:       
+        dialect: org.hibernate.dialect.H2Dialect
+        show-sql: true
+  mvc:
+    favicon:
+      enabled: false
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  session:
+    store-type: none
+  h2:
+    console:
+      enabled: true
+      path: /db-console
+server:
+  servlet-path: /api
+  tomcat:
+#    basedir: target/.tomcat
+    accesslog:
+      enabled: true
+  error:
+    whitelabel:
+      enabled: false
+  session:
+    timeout: 1800
+  port: 8080
+  
+# security.realmName: kakao
+    
+logging:
+  level:
+    com.uangel.comma: DEBUG 
+    org.hibernate.SQL: INFO
