@@ -9,7 +9,6 @@
 		password
 		name
 		createdDate
-		updatedDate
 
 	TB_SEARCH_HISTORY
 		historyNo
@@ -20,9 +19,8 @@
 	TB_SEARCH_KEYWORD_RANK
 		rankNo
 		keyword
-		sum
+		totalCount
 		createdDate
-		appliedDate
 
 ## APIs
 - 회원가입 API : POST /user
@@ -38,6 +36,7 @@
 - 비동기 처리
 - 테이블에 락 걸기
 
-## 카카오 API 연동 Client
-## 네이버 API 연동 Client
+## 검색 API 연동 
+- 카카오 Client
+- 네이버 Client
 
