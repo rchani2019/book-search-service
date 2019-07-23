@@ -37,7 +37,6 @@ spring:
 server:
   servlet-path: /api
   tomcat:
-#    basedir: target/.tomcat
     accesslog:
       enabled: true
     uri-encoding: UTF-8
@@ -48,8 +47,6 @@ server:
     timeout: 1800
   port: 8080
   
-# security.realmName: kakao
-    
 logging:
   level:
     com.uangel.comma: DEBUG 
@@ -64,4 +61,5 @@ api:
       url: https://openapi.naver.com/v1/search/book.json
       clientId: wKkHs1GGw0VvCx3VhDsU
       clientSecret: x2ue8waTJk
+
       
