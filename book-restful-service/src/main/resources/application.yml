@@ -51,6 +51,7 @@ logging:
   level:
     com.uangel.comma: DEBUG 
     org.hibernate.SQL: INFO
+    org.springframework.security.web.FilterChainProxy: DEBUG
 
 api:
   search:

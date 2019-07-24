@@ -74,9 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 		http
 		// Request Matchers
-		.anonymous().and()
         .authorizeRequests()
-        .antMatchers(HttpMethod.POST, "/user")
+        .antMatchers("/api/user/join", "/user/join", "/api/user/join**", "/user/join**", "/db-console/**")
         .permitAll()
         .anyRequest()
         .authenticated()
@@ -85,6 +84,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .addFilterAfter(extendedBasicAuthenticationFilter(), ExceptionTranslationFilter.class)
 		.csrf().disable()
         .requestCache().disable()
+        .anonymous()
+        .and()
         .exceptionHandling().disable()
         .headers().cacheControl().disable().httpStrictTransportSecurity().disable()
         .and()
@@ -95,7 +96,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-	    web.ignoring()
-	    .antMatchers("/db-console/*", "/index.html", "/");
+//	    web.ignoring()
+//	    .antMatchers("/db-console/*", "/index.html", "/user/join");
+		web.ignoring()
+		.antMatchers("/api/user/join", "/user/join", "/api/user/join**", "/user/join**", "/db-console/**");
 	}
 }

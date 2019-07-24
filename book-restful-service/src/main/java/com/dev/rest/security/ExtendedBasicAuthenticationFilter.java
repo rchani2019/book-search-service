@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -19,18 +21,16 @@ import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.codec.Base64;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.Assert;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 public class ExtendedBasicAuthenticationFilter extends OncePerRequestFilter implements MessageSourceAware {
+	Logger log = LoggerFactory.getLogger(getClass());
+	
 	private AuthenticationEntryPoint authenticationEntryPoint;
 	private AuthenticationManager authenticationManager;
 	protected MessageSourceAccessor messages = SpringSecurityMessageSource.getAccessor();
 	
-	private final RequestMatcher joinUserMatcher = new AntPathRequestMatcher("/user/join", "POST");
-
 	public ExtendedBasicAuthenticationFilter(AuthenticationManager authenticationManager,
 			AuthenticationEntryPoint authenticationEntryPoint) {
 		this.authenticationManager = authenticationManager;
@@ -46,13 +46,6 @@ public class ExtendedBasicAuthenticationFilter extends OncePerRequestFilter impl
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		
-		// 회원 가입일 경우 인증을 타지 않는다.
-		if(joinUserMatcher.matches(request)) {
-			filterChain.doFilter(request, response);
-			return;
-		}
-		
 		
 		String header = request.getHeader("Authorization");
 		if (header == null || !header.startsWith("Basic ")) {
