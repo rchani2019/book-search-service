@@ -1,6 +1,37 @@
 ## book-search-service
+	기능 :
+	1. 회원 가인
+	2. 로그인
+	3. 책 검색/조회
+	4. 책 상세 정보 조회
+	5. 나의 검색 히스토리 조회
+	6. 많이 검색한 키워드 탑 10 조회
 
-### Things to do
+#### Jar File Link
+	https://drive.google.com/drive/folders/1KOmCOEisLwjaAXcjgYTUfQmjeq4Xnz41
+
+#### PostMan Import File Link
+	https://github.com/rchani2019/book-search-service/blob/master/Book-RESTful-Service.postman_collection.json
+
+#### 인증
+	HTTP Basic 인증를 사용한다. 아래와 같이 Header의 Authorization 값에 인증 정보가 전달된다.
+	Authorization Basic Base64Encode[UserId:Password]
+	ex) Authorization Basic cmNoYW5pOmtha2FvMTIz
+	
+#### API 목록
+	1. 회원 가입
+		POST /api/user/join
+	2. 로그인
+		GET /api/login
+	3. 책 검색/조회
+		POST /api/books
+	4. 책 상세 정보 조회
+		GET /api/books/{isbn}
+	5. 나의 검색 히스토리 조회
+		GET /api/history
+	6. 키워드 탑 10 조회
+		GET /api/book/rank
+
 #### DB 설계
 
 	TB_USER
@@ -21,25 +52,3 @@
 		keyword
 		totalCount
 		createdDate
-
-#### APIs
-- 회원가입 API : POST /user
-- 로그인 API : GET /login
-- 책 검색 API : GET /book/search/{keyword}
-- 책 상세보기 API : GET /book/{bookID}
-- 내 검색 히스토리 조회 API : GET /history/{userNo}
-- 인기 키워드 목록 조회 API : GET /keywork/rank/{Count}
-
-#### 랭크 생성
-- Event 작성
-- EventListener 작성
-- 비동기 처리
-- 테이블에 락 걸기
-
-#### 검색 API 연동 
-- 카카오 Client
-- 네이버 Client
-
-#### Security 설정
-#### frontend 환경 설정
-
