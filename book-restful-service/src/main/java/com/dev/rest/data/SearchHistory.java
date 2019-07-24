@@ -1,6 +1,5 @@
 package com.dev.rest.data;
 
-import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,18 +9,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "TB_SEARCH_HISTORY")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
 @Getter
 public class SearchHistory extends BaseSerializable {
 
@@ -41,18 +41,14 @@ public class SearchHistory extends BaseSerializable {
 	@Column(length = 100, nullable = false)
 	private String keyword;
 
-	@Column(columnDefinition = "DATETIME", updatable = false, nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-
 	@JsonIgnore
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "userNo")
 	private User user;
 
-	public SearchHistory(Integer historyNo, String keyword) {
+	public SearchHistory(String keyword, User user) {
 		super();
-		this.historyNo = historyNo;
 		this.keyword = keyword;
+		this.user = user;
 	}
 }

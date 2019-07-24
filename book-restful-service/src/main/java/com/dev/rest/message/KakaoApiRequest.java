@@ -4,13 +4,11 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class KakaoApiRequest {
 
 	/*
@@ -40,4 +38,10 @@ public class KakaoApiRequest {
 	@NotNull
 	private Integer size;
 
+	public KakaoApiRequest(String query, Integer page, Integer size) {
+		super();
+		this.query = query;
+		this.page = page;
+		this.size = size;
+	}
 }

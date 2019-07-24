@@ -2,9 +2,6 @@ package com.dev.rest;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.util.Arrays;
-import java.util.Optional;
-
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 

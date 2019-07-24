@@ -15,6 +15,7 @@ public class ExtendedDaoAuthenticationProvider extends DaoAuthenticationProvider
 
 	@Autowired
 	UserDetailsService userDetailsService;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 

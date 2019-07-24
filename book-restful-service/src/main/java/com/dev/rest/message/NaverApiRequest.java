@@ -1,7 +1,6 @@
 package com.dev.rest.message;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -37,4 +36,10 @@ public class NaverApiRequest {
 	 */
 	@NotNull
 	private Integer display;
+	
+	public NaverApiRequest(String query, Integer start, Integer display) {
+		this.query = query;
+		this.start = start;
+		this.display = display;
+	}
 }

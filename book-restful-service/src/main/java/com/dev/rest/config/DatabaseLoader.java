@@ -10,15 +10,17 @@ import com.dev.rest.data.repository.UserRepository;
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
-	private final UserRepository repository;
+	private final UserRepository userRepository;
 
 	@Autowired
 	public DatabaseLoader(UserRepository repository) {
-		this.repository = repository;
+		this.userRepository = repository;
 	}
 
 	@Override
 	public void run(String... strings) throws Exception {
-		this.repository.save(new User("rchani", "kakao123", "munjeong"));
+		if(userRepository.findByUserId("rchani") == null) {
+			userRepository.save(new User("rchani", "kakao123", "munjeong"));
+		}
 	}
 }

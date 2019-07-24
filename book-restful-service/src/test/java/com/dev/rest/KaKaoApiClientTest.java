@@ -1,14 +1,13 @@
 package com.dev.rest;
 
 import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Optional;
 
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +38,7 @@ public class KaKaoApiClientTest {
 	@Test
 	public void A_searchBookByKeywordTest() {
 		// given
-		KakaoApiRequest request = new KakaoApiRequest("미움받을 용기", "accuracy", 1, 5);
+		KakaoApiRequest request = new KakaoApiRequest("미움받을 용기", 1, 5);
 
 		// when
 		KakaoApiResponse response = kakaoClient.searchBooksByKeyword(request);
@@ -58,8 +57,11 @@ public class KaKaoApiClientTest {
 	@Test
 	public void B_searchBookByIsbn() {
 		// given
+		if(targetIsbnNo == null || !targetIsbnNo.isPresent()) {
+			targetIsbnNo = Optional.of("8996991341");
+		}
 		assertThat(targetIsbnNo.isPresent());
-		KakaoApiRequest request = new KakaoApiRequest(targetIsbnNo.get(), "accuracy", 1, 5);
+		KakaoApiRequest request = new KakaoApiRequest(targetIsbnNo.get(), 1, 1);
 
 		// when
 		KakaoApiResponse response = kakaoClient.searchBooksByIsbn(request);

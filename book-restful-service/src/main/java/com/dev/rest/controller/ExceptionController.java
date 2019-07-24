@@ -29,7 +29,11 @@ import com.dev.rest.exception.E500Exception;
 import com.dev.rest.exception.EcodeException;
 import com.dev.rest.exception.RestAPIException;
 import com.dev.rest.service.MessageService;
-
+/**
+ * 예외 처리
+ * @author gomunjeong
+ *
+ */
 @ControllerAdvice
 public class ExceptionController extends ResponseEntityExceptionHandler {
 

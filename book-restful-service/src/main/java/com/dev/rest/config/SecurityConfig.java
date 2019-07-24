@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -16,8 +17,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 
@@ -32,11 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     DaoAuthenticationProvider daoAuthenticationProvider;
 	
 	private String realmName = "BookAPI";
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-	    return new BCryptPasswordEncoder();
-	}
 	
 	/*
 	 * Security Excepton 처리 
@@ -80,8 +74,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 		http
 		// Request Matchers
+		.anonymous().and()
         .authorizeRequests()
-        .antMatchers("/api/users", "/db-console")
+        .antMatchers(HttpMethod.POST, "/user")
         .permitAll()
         .anyRequest()
         .authenticated()
@@ -89,26 +84,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .addFilterBefore(exceptionTranslationFilter(), LogoutFilter.class)
         .addFilterAfter(extendedBasicAuthenticationFilter(), ExceptionTranslationFilter.class)
 		.csrf().disable()
-        .anonymous().disable()
         .requestCache().disable()
         .exceptionHandling().disable()
         .headers().cacheControl().disable().httpStrictTransportSecurity().disable()
         .and()
         .logout().logoutSuccessUrl("/login")
         .and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).sessionFixation().none();
-		
-		
-//		.httpBasic().disable()
-//        .csrf().disable()
-//        .anonymous().disable()
-//        .exceptionHandling().disable()
-//        .requestCache().disable()
-//        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).sessionFixation().none();
 	}
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-	    web.ignoring().antMatchers("/api/users", "/api/user", "/db-console");
+	    web.ignoring()
+	    .antMatchers("/db-console/*", "/index.html", "/");
 	}
 }

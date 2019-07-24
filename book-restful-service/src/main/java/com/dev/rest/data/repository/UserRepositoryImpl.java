@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.dev.rest.data.User;
 
@@ -13,13 +15,13 @@ public class UserRepositoryImpl implements UserRepositoryExtension<User> {
     private EntityManager entityManager;
 
 
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public <S extends User> S save(S user) {
 		if (StringUtils.isNotEmpty(user.getPassword())) {
-//			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 		}
 		entityManager.persist(user);
 		return user;
