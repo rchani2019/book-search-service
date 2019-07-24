@@ -5,7 +5,7 @@
 	3. 책 검색/조회
 	4. 책 상세 정보 조회
 	5. 나의 검색 히스토리 조회
-	6. 많이 검색한 키워드 탑 10 조회
+	6. 검색 키워드 탑 10 조회
 
 #### Jar File Link
 	https://drive.google.com/drive/folders/1KOmCOEisLwjaAXcjgYTUfQmjeq4Xnz41
@@ -29,7 +29,7 @@
 		GET /api/books/{isbn}
 	5. 나의 검색 히스토리 조회
 		GET /api/history
-	6. 키워드 탑 10 조회
+	6. 검색 키워드 탑 10 조회
 		GET /api/book/rank
 
 #### DB 설계
