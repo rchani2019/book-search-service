@@ -1,19 +1,16 @@
 package com.dev.rest.event.listener;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
+//import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +36,7 @@ public class SearchRankListener {
 
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, fallbackExecution=true, classes=SearchHistoryEvent.class)
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	@Async("searchRankCalThreadPoolTaskExecutor")
+//	@Async("searchRankCalThreadPoolTaskExecutor")
 	public void onSearchHistoryEvent(SearchHistoryEvent event) throws InterruptedException {
 		log.debug("onSearchHistoryEvent fired!!");
 		if(event.getType() == EVENT_TYPE_SEARCH_ENTER) {
@@ -60,24 +57,8 @@ public class SearchRankListener {
 			entityManager.persist(new KeywordRank(keyword, 1));
 		} else {
 			entityManager.lock(keywordRank, LockModeType.PESSIMISTIC_WRITE);
-//			keywordRank.setTotalCount(keywordRank.getTotalCount() + 1);
 			keywordRank.incrementTotalCount();
 			entityManager.merge(keywordRank);			
 		}
-		
-		// 공백으로 나눈 각각의 키워드도 등록한다.
-//		Arrays.stream(event.getSearchHistory().getKeyword().split(" "))
-//		.map(String::trim)
-//		.filter(k -> StringUtils.isEmpty(k))
-//		.forEach(k -> {
-//			KeywordRank partialKeyword = keywordRankRepository.findOneByKeyword(k);
-//			if(partialKeyword == null) {
-//				entityManager.persist(new KeywordRank(keyword, 1));
-//			} else {
-//				entityManager.lock(partialKeyword, LockModeType.PESSIMISTIC_WRITE);
-//				keywordRank.setTotalCount(partialKeyword.getTotalCount() + 1);
-//				entityManager.merge(partialKeyword);			
-//			}	
-//		});
 	}
 }
