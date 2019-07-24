@@ -11,6 +11,7 @@
 	Spring Security
 	Spring Data JPA
 	Spring Web
+	Spring Test
 	H2 Database 
 	lombok - Pojo 객체의 보일러플레이트 코드 제거 
 	jackson - JSON 데이터 바인딩
