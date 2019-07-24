@@ -1,7 +1,5 @@
 package com.dev.rest.service;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.nio.charset.Charset;
 
 import org.slf4j.Logger;
@@ -47,19 +45,9 @@ public class NaverClient {
 			headers.add("X-Naver-Client-Id", clientId);
 			headers.add("X-Naver-Client-Secret", clientSecret);
 
-			/*
-			try {
-				String encodedQuery = new String(request.getQuery().getBytes(), "UTF-8");
-				System.out.println("encodedQuery = " + encodedQuery);
-			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			*/
-			
 			UriComponents builder = null;
 				builder = UriComponentsBuilder.fromHttpUrl(url)
-						.queryParam("query", URLEncoder.encode(request.getQuery(), "UTF-8"))
+						.queryParam("query", request.getQuery())
 						.queryParam("sort", request.getSort())
 						.queryParam("start", request.getStart())
 						.queryParam("display", request.getDisplay()).build(false);
@@ -72,8 +60,6 @@ public class NaverClient {
 		} catch (RestClientException e) {
 			log.error("fail to call naver api. request=" + request.toString(), e);
 			throw new E502BadGatewayException();
-		} catch (UnsupportedEncodingException e) {
-			log.error("fail to encode keyword. request=" + request.toString(), e);
 		}
 
 		return responseData;
